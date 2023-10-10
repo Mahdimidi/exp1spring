@@ -16,7 +16,7 @@ pipeline {
         }
         stage ("Generate backend image") {
               steps {
-                   dir("exp1-spring"){
+                   dir("exp1spring"){
                       sh "mvn clean install"
                       sh "docker build -t docexp1-spring ."
                   }                
