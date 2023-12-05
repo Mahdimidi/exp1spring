@@ -14,18 +14,18 @@ pipeline {
                 sh "git clone https://github.com/Mahdimidi/exp1spring.git"
             }
         }
-        stage ("Generate backend image") {
+        stage ("Build") {
               steps {
                    dir("exp1spring"){
                       sh "mvn clean install"
-                      sh "docker build -t docexp1-spring ."
                   }                
               }
           }
-        stage ("Run docker compose") {
+        stage ("SonarQube Analysis") {
             steps {
-                 dir("exp1spring"){
-                    sh " docker compose up -d"
+                withSonarQubeEnv('sonar-server'){
+                    dir("exp1spring"){
+                        sh 'mvn sonar:sonar'
                 }                
             }
         }
